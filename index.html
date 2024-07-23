@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: hsl(218, 23%, 16%);
+            font-family: Arial, sans-serif;
+        }
+
+        .quote-card {
+            background-color: #1e2d38;
+            border-radius: 10px;
+            padding: 20px 50px;
+            text-align: center;
+            color: #ffffff;
+            max-width: 250px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .quote-card h2 {
+            margin: 0;
+            font-size: 12px;
+            color: #7ee6a8;
+            letter-spacing: 1px;
+        }
+
+        .quote-card p {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .quote-card .separator {
+            margin: 0 auto 20px auto;
+        }
+
+        .quote-card .separator img {
+            width: 250px;
+        }
+
+        .quote-card .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #00d678;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: absolute;
+            right: 160px;
+        }
+
+        .quote-card .icon img {
+            width: 15px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quote-card">
+        <h2 id="advice-number">ADVICE #117</h2>
+        <p id="advice-text">“It is easy to sit up and take notice, what's difficult is getting up and taking action.”
+        </p>
+        <div class="separator">
+            <img src="./images/pattern-divider-desktop.svg" alt="separator">
+        </div>
+        <div class="icon" id="dice-icon">
+            <img src="./images/icon-dice.svg" alt="dice icon">
+        </div>
+    </div>
+
+    <script>
+        // document.getElementById('dice-icon').addEventListener('click', () => {
+        //     fetch('https://api.adviceslip.com/advice')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('advice-text').innerText = `“${data.slip.advice}”`;
+        //         })
+        //         .catch(error => console.error('Error fetching advice:', error));
+        // });
+
+        const apiUrl = "https://api.adviceslip.com/advice";
+
+        async function fetchAdvice() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    return console.log("Error: " + response.status);
+                } else {
+                    const data = await response.json();
+                    const advice = data.slip;
+                    console.log(advice);
+
+                    document.getElementById('advice-number').innerText = `ADVICE #${advice.id}`;
+                    document.getElementById('advice-text').innerText = `“${advice.advice}”`;
+                }
+            } catch (error) {
+                console.error('Error fetching advice:', error);
+            }
+        }
+
+        document.getElementById('dice-icon').addEventListener('click', fetchAdvice);
+    </script>
+
+
+</body>
+
+</html>
